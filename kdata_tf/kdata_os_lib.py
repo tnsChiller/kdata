@@ -14,7 +14,7 @@ game_cont_lim = 1
 def update_que():
     client.containers.prune()
 
-    with open("lifter-out\\game_dct.pickle", "rb") as f:
+    with open("lifter-out/game_dct.pickle", "rb") as f:
         game_dct = pickle.load(f)
         f.close()
 
@@ -27,7 +27,7 @@ def update_que():
                 obj.final_dif = game_dct[i]["stack_dif"]
             obj.save()
 
-    with open("lifter-out\\train_dct.pickle", "rb") as f:
+    with open("lifter-out/train_dct.pickle", "rb") as f:
         train_dct = pickle.load(f)
         f.close()
 
@@ -73,10 +73,10 @@ def update_que():
                                           "status": train.status,
                                           "fin_loss": 999}
 
-    with open("lifter-out\\game_dct.pickle","wb") as f:
+    with open("lifter-out/game_dct.pickle","wb") as f:
         pickle.dump(game_dct,f,pickle.HIGHEST_PROTOCOL)
 
-    with open("lifter-out\\train_dct.pickle","wb") as f:
+    with open("lifter-out/train_dct.pickle","wb") as f:
         pickle.dump(train_dct,f,pickle.HIGHEST_PROTOCOL)
 
     game_cts, train_cts = 0,0
@@ -93,16 +93,16 @@ def update_que():
         cont = client.containers.run("lifter:1.05_train",
                                      labels={"type": "train"},
                                      detach=True,
-                                     volumes={f"{os.getcwd()}\\lifter-out": {"bind": "/lifter-out", "mode": "rw"},
-                                              f"{os.getcwd()}\\kdata_tf\\machines": {"bind": "/machines", "mode": "rw"}},
+                                     volumes={f"{os.getcwd()}/lifter-out": {"bind": "/lifter-out", "mode": "rw"},
+                                              f"{os.getcwd()}/kdata_tf/machines": {"bind": "/machines", "mode": "rw"}},
                                      name=f"train_{i+1}")
 
     if game_req > 0 and game_cts == 0:
         cont = client.containers.run("lifter:1.05_game",
                                      labels={"type": "game"},
                                      detach=True,
-                                     volumes={f"{os.getcwd()}\\lifter-out": {"bind": "/lifter-out", "mode": "rw"},
-                                              f"{os.getcwd()}\\kdata_tf\\machines": {"bind": "/machines", "mode": "rw"}},
+                                     volumes={f"{os.getcwd()}/lifter-out": {"bind": "/lifter-out", "mode": "rw"},
+                                              f"{os.getcwd()}/kdata_tf/machines": {"bind": "/machines", "mode": "rw"}},
                                      name=f"game_1")
 
 
@@ -150,8 +150,8 @@ def update_lifters(game_lifters=1, train_lifters=4):
                                      labels={"port": str(4000+i),
                                              "type": "game"},
                                      detach=True,
-                                     volumes={f"{os.getcwd()}\\lifter-out": {"bind": "/lifter-out", "mode": "rw"},
-                                              f"{os.getcwd()}\\machines": {"bind": "/machines", "mode": "rw"}},
+                                     volumes={f"{os.getcwd()}/lifter-out": {"bind": "/lifter-out", "mode": "rw"},
+                                              f"{os.getcwd()}/machines": {"bind": "/machines", "mode": "rw"}},
                                      name=f"game_{i+1}")
         
     for i in range(train_ctr,train_lifters):
@@ -160,8 +160,8 @@ def update_lifters(game_lifters=1, train_lifters=4):
                                      labels={"port": str(4100+i),
                                              "type": "train"},
                                      detach=True,
-                                     volumes={f"{os.getcwd()}\\lifter-out": {"bind": "/lifter-out", "mode": "rw"},
-                                              f"{os.getcwd()}\\machines": {"bind": "/machines", "mode": "rw"}},
+                                     volumes={f"{os.getcwd()}/lifter-out": {"bind": "/lifter-out", "mode": "rw"},
+                                              f"{os.getcwd()}/machines": {"bind": "/machines", "mode": "rw"}},
                                      name=f"train_{i+1}")
     
     train_que = Training.objects.filter(status="QUE").order_by("time")
