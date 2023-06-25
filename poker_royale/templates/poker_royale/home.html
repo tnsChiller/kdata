@@ -1,0 +1,55 @@
+{% extends "poker_royale/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<main role="main" class="container">
+		<h2>Poker Royale</h2>
+		<div class="row">
+			<div class="col-md-8 content-section">
+				<legend class="border-bottom mb-4">Available Games</legend>
+			    <div class="w3-container">
+				    {% for game in g_list %}
+					    <ul class="w3-ul w3-hoverable">		
+					    	<div class="game-section">
+								<li class="game-info">
+								  	<b><a href="{% url 'game-detail' game.pkid %}">{{ game.name }}</a></b>
+								    <small class="text-muted">By <a href="{% url 'user-games' game.creator.pk %}">{{ game.creator}}</a></small>
+								    <div class="game-info">{{ game.number_of_games }} Games - {{ game.entry_cost }} KMO</div>
+								</li>
+							</div>							
+						</ul>
+				    {% endfor %}
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="content-section">
+					<div class="form-group">
+						<form method="POST" enctype="multipart/form-data">
+						  {% csrf_token %}
+						  <fieldset class="form-group">
+									<legend class="border-bottom mt-20">Create Game</legend>
+									<h6>User: {{ user }}</h6>
+									<h6>Machine: {{ user.profile.machine }}</h6>
+								{{ g_form|crispy }}
+						  </fieldset>
+						  <button class="btn btn-outline-info" type="submit">Create</button>
+						  <a class="btn btn-outline-danger" href="{% url 'close-games' %}">Close Games</a>
+						</form>
+					</div>
+				</div>
+				<div class="content-section">
+					<div class="form-group">
+						<form method="POST" enctype="multipart/form-data">
+						  {% csrf_token %}
+						  <fieldset class="form-group">
+									<legend class="border-bottom mt-20">Spar</legend>
+									<h6>User: {{ user }}</h6>
+									{{ s_form|crispy }}
+						  </fieldset>
+						  <button class="btn btn-outline-info" type="submit">Spar</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock content %}

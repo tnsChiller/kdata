@@ -1,0 +1,17 @@
+{% extends "poker_royale/base.html" %}
+{% block content %}
+	<table>
+		<tr>
+			<td>Host</td>
+			<td>Players</td>
+			<td>Entry Cost</td>
+		</tr>
+		{% for game in games %}
+		<tr>
+			<td>{{game.host}}</td>
+			<td>{{game.num_players}}/{{game.max_players}}</td>
+			<td>{{game.entry_cost}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+{% endblock content %}

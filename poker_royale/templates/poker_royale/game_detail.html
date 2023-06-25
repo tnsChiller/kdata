@@ -1,0 +1,46 @@
+{% extends "poker_royale/base.html" %}
+{% block content %}
+  <div class="media-body">
+    <h2 class="article-title">Game: {{ object.name }}</h2>
+    
+    <p>Number of games: {{ object.number_of_games }}</p>
+    <p>Challenge amount: {{ object.entry_cost }} KM</p>
+    <p>Contender: <a href="#">{{ object.m1.name }}_mk{{ object.m1.mark }}</a></p>
+    <p>Creator: <a href="#">{{ object.creator}}</a></p>
+
+    {% if object.status == "WAITING" %}
+      <p> Challenger: --WAITING--</p>
+      <p>Status: Waiting for a worthy foe.</p>
+    {% elif object.status == "QUE" %}
+      <p> Challenger: {{ object.m2.name }}_mk{{ object.m2.mark }}</p>
+      <p>Status: Queued for execution.</p>
+    {% elif object.status == "DONE" %}
+      <p> Challenger: {{ object.m2.name }}_mk{{ object.m2.mark }}</p>
+      <p>Status: To the victor go the spoils.</p>
+      {% if object.final_dif >= 0 %}
+        <p> Winner: {{ object.m1.name }}_mk{{ object.m1.mark }} </p>
+      {% else %}
+        <p> Winner: {{ object.m2.name }}_mk{{ object.m2.mark }} </p>
+      {% endif %}
+      <p> Final Stack Difference: {{ object.final_dif }}
+    {% elif object.status == "CLOSED" %}
+      <p> Challenger: ---</p>
+      <p>Status: The Contender chickened out.</p>
+    {% endif %}
+    {% if object.status != "CLOSED" and object.status != "DONE" %}
+      <div>
+        {% if user.is_authenticated and object.status == "WAITING" %}
+          {% if object.creator == user %}
+            <a class="btn btn-info btn-sm mt-1 mb-1" href="{% url 'game-close' object.pkid %}">Close Game</a>
+          {% else %}
+          <form method="POST", enctype="multipart/form-data">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger" type="submit" name="PLAY_{{ user.profile.machine.unid }}">PLAY</button>
+          </form>
+          {% endif %}
+        {% endif %}
+      </div>
+    {% endif %}
+    <img src="/lifter-out/{{ object.pkid }}.png" alt="Stack Grapth">
+  </div>
+{% endblock content %}

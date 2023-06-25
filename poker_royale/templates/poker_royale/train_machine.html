@@ -1,0 +1,21 @@
+{% extends "poker_royale/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<div class="content-section">
+		<div class="media">
+			<h2 class="account-heading">{{ user.machine }}</h2>
+		</div>
+		<form method="POST" enctype="multipart/form-data">
+		  {% csrf_token %}
+		  <fieldset class="form-group">
+				<legend class="border-bottom mb-4">Train Machine</legend>
+			  	{{ machine_train_form|crispy }}
+		  </fieldset>
+
+			<div class="form-group">
+				<button class="btn btn-outline-info" type="submit">Train</button>
+				<a class="btn btn-outline-info" href="{% url 'profile' %}">Back</a>
+			</div>
+		</form>
+	</div>
+{% endblock content %}

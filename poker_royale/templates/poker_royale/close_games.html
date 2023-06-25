@@ -1,0 +1,35 @@
+{% extends "poker_royale/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<div class="content-section">
+		<div class="media">
+			<h2 class="account-heading">{{ user.username }}</h2>
+		</div>
+		<form method="POST" enctype="multipart/form-data">
+		  {% csrf_token %}
+		  <fieldset class="form-group">
+				<legend class="border-bottom mb-4">Close Games</legend>
+			  	<div class="container">
+			  		<table>
+			  			<thead>
+			  				<th>Name</th>
+			  				<th>Entry Cost</th>
+			  				<th>Delete</th>
+			  			</thead>
+			  			<tbody>
+			  				{% for game in games %}
+			  					<tr>
+			  						<td>{{ game.name }}</td>
+			  						<td>{{ game.entry_cost}}
+			  						<td><input type="checkbox" name="{{game.pkid}}"></td>
+			  					</tr>
+	  						{% endfor %}
+			  			</tbody>
+			  		</table>
+					<button class="btn btn-outline-danger" type="submit">Close</button>
+					<a class="btn btn-outline-info" href="{% url 'poker-royale-home' %}">Back</a>
+			  	</div>
+		  </fieldset>
+		</form>
+	</div>
+{% endblock content %}

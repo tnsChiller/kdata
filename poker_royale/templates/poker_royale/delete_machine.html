@@ -1,0 +1,35 @@
+{% extends "poker_royale/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<div class="content-section">
+		<div class="media">
+			<h2 class="account-heading">{{ user.username }}</h2>
+		</div>
+		<form method="POST" enctype="multipart/form-data">
+		  {% csrf_token %}
+		  <fieldset class="form-group">
+				<legend class="border-bottom mb-4">Delete Machines</legend>
+			  	<div class="container">
+			  		<table>
+			  			<thead>
+			  				<th>Machine</th>
+			  				<th>Version</th>
+			  				<th>Delete</th>
+			  			</thead>
+			  			<tbody>
+			  				{% for machine in machines %}
+			  					<tr>
+			  						<td>{{ machine.name }}</td>
+			  						<td>{{ machine.mark }}</td>
+			  						<td><input type="checkbox" name="{{machine.pk}}"></td>
+			  					</tr>
+	  						{% endfor %}
+			  			</tbody>
+			  		</table>
+					<button class="btn btn-outline-danger" type="submit">Delete</button>
+					<a class="btn btn-outline-info" href="{% url 'profile' %}">Back</a>
+			  	</div>
+		  </fieldset>
+		</form>
+	</div>
+{% endblock content %}

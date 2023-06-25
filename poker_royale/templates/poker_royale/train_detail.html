@@ -1,0 +1,16 @@
+{% extends "poker_royale/base.html" %}
+{% block content %}
+  <div class="media-body">
+    <h2 class="article-title">Training Session</h2>
+    
+    <p>Machine: {{ object.machine.name }}</p>
+    <p>Number of games: {{ object.num }}</p>
+    <p>Iterations: {{ object.it }}</p>
+    <p>Number of epochs: {{ object.n_epochs }}</p>
+    <p>Batch Size: {{ object.btc_size }}</p>
+    <p>Learning Rate: {{ object.learning_rate }}</p>
+    <p>Shuffle: {{ object.shuffle }}</p>
+    <p>Status: {{ object.status }}</p>
+
+  </div>
+{% endblock content %}
