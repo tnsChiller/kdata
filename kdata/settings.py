@@ -21,13 +21,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-z2520zaet&br)7kh&@_s2ose-s%+u4-o)5c&n9n8rure(at%b9"
+SECRET_KEY = "138f8b536994edb4764f3cfa482eb70bd9a27ad7a7d420b080e483256899479c"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+        "54.91.183.117"
+        ]
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_SSL_REDIRECT = False
+SECURE_HSTS_SECONDS = 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_HSTS_PRELOAD = False
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Application definition
 
@@ -38,6 +46,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap4",
     "fontawesome",
+    "storages",
     "widget_tweaks",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -137,3 +146,16 @@ CRISPY_TEMPLATE_PACK = "bootstrap-4"
 
 LOGIN_REDIRECT_URL = "kdata-home"
 LOGIN_URL = "login"
+
+AWS_ACCESS_KEY_ID = 'AKIAVDXLWE5OZVZD7UNO'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'pokeroyale'
+AWS_S3_SIGNATURE_NAME = 's3v4',
+AWS_S3_REGION_NAME = 'us-east-1'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL =  None
+AWS_S3_VERITY = True
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

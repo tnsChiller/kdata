@@ -10,8 +10,12 @@
 					    <ul class="w3-ul w3-hoverable">		
 					    	<div class="game-section">
 								<li class="game-info">
-								  	<b><a href="{% url 'game-detail' game.pkid %}">{{ game.name }}</a></b>
-								    <small class="text-muted">By <a href="{% url 'user-games' game.creator.username %}">{{ game.creator}}</a></small>
+								    <b><a href="{% url 'game-detail' game.pkid %}">{{ game.name }}</a></b>
+								    {% if game.spar %}
+								   	 <small class="text-muted">By <a href="{% url 'user-games' game.creator.username %}">{{ game.creator}}</a>  -SPAR-</small>
+								    {% else %}
+									<small class="text-muted">By <a href="{% url 'user-games' game.creator.username %}">{{ game.creator}}</a></small>
+								    {% endif %}
 								    <div class="game-info">{{ game.number_of_games }} Games - {{ game.entry_cost }} KMO</div>
 								</li>
 							</div>							

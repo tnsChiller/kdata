@@ -17,7 +17,6 @@ train_lifters = 4
 
 class GameDetailView(DetailView):
 	model = Game
-
 	def post(self, request, *args, **kwargs):
 		pk = kwargs.get("pk")
 

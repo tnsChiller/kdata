@@ -27,9 +27,12 @@
       <p> Challenger: ---</p>
       <p>Status: The Contender chickened out.</p>
     {% endif %}
+    <div>
+      <a class="btn btn-outline-info" href={% url 'user-games' user.pk %}>My Games</a>
+    </div>
     {% if object.status != "CLOSED" and object.status != "DONE" %}
       <div>
-        {% if user.is_authenticated and object.status == "WAITING" %}
+	{% if user.is_authenticated and object.status == "WAITING" %}
           {% if object.creator == user %}
             <a class="btn btn-info btn-sm mt-1 mb-1" href="{% url 'game-close' object.pkid %}">Close Game</a>
           {% else %}
@@ -41,6 +44,6 @@
         {% endif %}
       </div>
     {% endif %}
-    <img src="/lifter-out/{{ object.pkid }}.png" alt="Stack Grapth">
+    <img src={{ object.plot.url }} alt="Stack Graph">
   </div>
 {% endblock content %}

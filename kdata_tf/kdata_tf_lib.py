@@ -419,10 +419,10 @@ def make_machine(machine):
     for i in layers:model.add(i)
 
     model.compile(loss=loss,optimizer=opt,metrics=[])
-    model.save(f"kdata_tf\\machines\\{machine.pk}.h5")
+    model.save(f"kdata_tf/machines/{machine.pk}.h5")
 
 def delete_machine(mach):
-    machine_path = f"kdata_tf\\machines\\{mach.pk}.h5"
+    machine_path = f"kdata_tf/machines/{mach.pk}.h5"
     if os.path.isfile(machine_path):
         os.remove(machine_path)
         mach.delete()
@@ -477,7 +477,7 @@ def generate_data(num,mod):
     return x,y
 
 def train_machine(mod_pk, new_pk, num,it, n_epochs,learning_rate, btc_size, shuffle):
-    mod = keras.models.load_model(f"machines\\{mod_pk}.h5")
+    mod = keras.models.load_model(f"machines/{mod_pk}.h5")
     mod.optimizer.learning_rate = learning_rate
     x,y = generate_data(num,mod)
     for i in range(it):
@@ -491,7 +491,7 @@ def train_machine(mod_pk, new_pk, num,it, n_epochs,learning_rate, btc_size, shuf
                              verbose=1)
         t1 = time.perf_counter()
         print(f"Training machine: iteration {i+1}/{it} complete. ({round(t1-t0,3)} s")
-    mod.save(f"{os.getcwd()}/machines\\{new_pk}.h5")
+    mod.save(f"{os.getcwd()}/machines/{new_pk}.h5")
     return round(train_hist.history['loss'][-1],8)
 
 def play_games(num, mod_pks, mod_names, game_pk):
@@ -533,5 +533,5 @@ def play_games(num, mod_pks, mod_names, game_pk):
     pyplot.legend(mod_names)
     pyplot.xlabel("Game Number")
     pyplot.ylabel("Total Stack")
-    pyplot.savefig(f"{os.getcwd()}/lifter-out\\{game_pk}.png")
+    pyplot.savefig(f"{os.getcwd()}/lifter-out/{game_pk}.png")
     return tot_gains[0,-1] - tot_gains[1,-1]

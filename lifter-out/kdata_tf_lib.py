@@ -419,10 +419,10 @@ def make_machine(machine):
     for i in layers:model.add(i)
 
     model.compile(loss=loss,optimizer=opt,metrics=[])
-    model.save(f"kdata_tf\\machines\\{machine.pk}.h5")
+    model.save(f"kdata_tf/machines/{machine.pk}.h5")
 
 def delete_machine(mach):
-    machine_path = f"kdata_tf\\machines\\{mach.pk}.h5"
+    machine_path = f"kdata_tf/machines/{mach.pk}.h5"
     if os.path.isfile(machine_path):
         os.remove(machine_path)
         mach.delete()

@@ -5,6 +5,7 @@ import socket
 import pickle
 from poker_royale.models import Training, Game, Machine
 from users.models import Profile
+from django.core.files.storage import default_storage
 HOST = "127.0.0.1"
 client = docker.from_env()
 cont_name = "lifter:1.05_game"
@@ -21,11 +22,19 @@ def update_que():
     for i in game_dct:
         status = game_dct[i]["status"]
         obj = Game.objects.filter(pkid=i).first()
-        if obj and obj.status != "DONE":
-            obj.status = status
-            if obj.status == "DONE":
+        if obj:
+            if obj.status != "DONE":
+                obj.status = status
+                obj.save()
+            else:
                 obj.final_dif = game_dct[i]["stack_dif"]
-            obj.save()
+                plot_path = f"lifter-out/{obj.pkid}.png"
+                plot_file = open(plot_path,"rb")
+                if os.path.exists(plot_path):
+                    obj.plot = f"{obj.pkid}.png"
+                    obj.save()
+                    default_storage.save(f"{obj.pkid}.png",plot_file)
+                    #os.remove(plot_path)
 
     with open("lifter-out/train_dct.pickle", "rb") as f:
         train_dct = pickle.load(f)
@@ -93,17 +102,17 @@ def update_que():
         cont = client.containers.run("lifter:1.05_train",
                                      labels={"type": "train"},
                                      detach=True,
-                                     volumes={f"{os.getcwd()}/lifter-out": {"bind": "/lifter-out", "mode": "rw"},
-                                              f"{os.getcwd()}/kdata_tf/machines": {"bind": "/machines", "mode": "rw"}},
+                                     volumes={os.path.join(os.getcwd(),"lifter-out"): {"bind": "/lifter-out", "mode": "rw"},
+                                              os.path.join(os.getcwd(),"kdata_tf/machines"): {"bind": "/machines", "mode": "rw"}},
                                      name=f"train_{i+1}")
 
     if game_req > 0 and game_cts == 0:
         cont = client.containers.run("lifter:1.05_game",
                                      labels={"type": "game"},
                                      detach=True,
-                                     volumes={f"{os.getcwd()}/lifter-out": {"bind": "/lifter-out", "mode": "rw"},
-                                              f"{os.getcwd()}/kdata_tf/machines": {"bind": "/machines", "mode": "rw"}},
-                                     name=f"game_1")
+                                     volumes={os.path.join(os.getcwd(),"lifter-out"): {"bind": "/lifter-out", "mode": "rw"},
+                                              os.path.join(os.getcwd(),"kdata_tf/machines"): {"bind": "/machines", "mode": "rw"}},
+                                     name="game_1")
 
 
 
