@@ -32,7 +32,7 @@ def profile(request):
 			messages.success(request, f"Changes saved.")
 			return redirect("profile")
 	else:
-		m_set = request.user.machine_set.all()
+		m_set = request.user.machine_set.filter(ready=True)
 		for m in m_set:
 			if m.marked_for_delete:
 				delete_machine(m)

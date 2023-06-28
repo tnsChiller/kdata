@@ -172,6 +172,7 @@ class Game(models.Model):
 	marked_for_close = models.BooleanField(default=False)
 	spar = models.BooleanField(default=False)
 	plot = models.ImageField(default='default.png', upload_to='lifter-out')
+	ready = models.BooleanField(default=True)
 
 	def __str__(self):
 		return self.name

@@ -91,7 +91,7 @@ def home(request):
 		s_form = NewSparSess(request.POST, instance=request.user)
 		kys = list(request.POST.keys())
 		if kys[1] == 'entry_cost' and g_form.is_valid():
-			num_games = len(Game.objects.filter(creator = request.user))
+			num_games = len(Game.objects.filter(creator=request.user, status="QUE"))
 			if num_games >= 10:
 				messages.warning(request, "You have too many active games, either close some of them or wait for them to be played.")
 			else:
@@ -107,7 +107,7 @@ def home(request):
 			return redirect("poker-royale-home")
 
 		elif kys[3] == 'm2' and s_form.is_valid():
-			num_games = len(Game.objects.filter(creator = request.user))
+			num_games = len(Game.objects.filter(creator=request.user,status="QUE"))
 			if num_games >= 10:
 				messages.warning(request, "You have too many active games, either close some of them or wait for them to be played.")
 			else:
@@ -133,8 +133,8 @@ def home(request):
 
 		g_form = NewGameForm(instance=request.user)
 		s_form = NewSparSess(instance=request.user)
-		s_form.fields["m1"].queryset = Machine.objects.filter(creator=request.user)
-		s_form.fields["m2"].queryset = Machine.objects.filter(creator=request.user)
+#		s_form.fields["m1"].queryset = Machine.objects.filter(creator=request.user,ready=True)
+#		s_form.fields["m2"].queryset = Machine.objects.filter(creator=request.user,ready=True)
 
 	g_list = Game.objects.filter(spar=False, status="WAITING")
 	context = {
@@ -180,6 +180,7 @@ def train_machine(request):
 			m_obj = train.machine
 			m_obj.mark += 1
 			m_obj.pk = None
+#			m_obj.ready = False
 			m_obj.save()
 			train.new_pk = m_obj.unid
 			train.save()

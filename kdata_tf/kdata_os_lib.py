@@ -46,6 +46,10 @@ def update_que():
         if obj:
             obj.status = status
             obj.save()
+            if obj.status == "DONE":
+                m_obj = obj.machine
+#                m_obj.ready = True
+                m_obj.save()
 
     game_que = Game.objects.filter(status="QUE")
     train_que = Training.objects.filter(status="QUE")
