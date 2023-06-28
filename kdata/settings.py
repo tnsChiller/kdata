@@ -24,19 +24,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "138f8b536994edb4764f3cfa482eb70bd9a27ad7a7d420b080e483256899479c"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
         "54.91.183.117",
-        "3.239.238.8"
+        "3.239.238.8",
+    	"54.210.232.185",
+        "0.0.0.0",
+    	"k-data.co.uk"
         ]
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
-SECURE_SSL_REDIRECT = False
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
 SECURE_HSTS_SECONDS = 0
-SECURE_HSTS_INCLUDE_SUBDOMAINS = False
-SECURE_HSTS_PRELOAD = False
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+CSRF_TRUSTED_ORIGINS = ['www.k-data.co.uk', 'k-data.co.uk' ]
 
 # Application definition
 
