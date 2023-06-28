@@ -1,0 +1,14 @@
+django
+django-crispy-forms
+django-bootstrap4
+django-widget-tweaks
+django-storages
+django-bootstrap-modal-forms
+tensorflow-cpu
+matplotlib
+docker
+fontawesome
+randomname
+django-bootstrap
+crispy-bootstrap4
+boto3
