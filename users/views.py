@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from kdata_tf.kdata_tf_lib import delete_machine
+from poker_royale.models import Machine
 
 def register(request):
 	if request.method == "POST":
@@ -32,13 +33,14 @@ def profile(request):
 			messages.success(request, f"Changes saved.")
 			return redirect("profile")
 	else:
-		m_set = request.user.machine_set.filter(ready=True)
+		m_set = request.user.machine_set.filter()
 		for m in m_set:
 			if m.marked_for_delete:
 				delete_machine(m)
 
 		u_form = UserUpdateForm(instance=request.user)
-		p_form = ProfileUpdateForm(instance=request.user.profile.machine, machine_set=request.user.machine_set)
+		p_form = ProfileUpdateForm(instance=request.user.profile.machine)
+		p_form.fields["machine"].queryset = Machine.objects.filter(creator=request.user,ready=True)
 
 	context = {
 		"title": "Profile",

@@ -21,8 +21,4 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
 	class Meta:
 		model = Profile
-		fields = ['machine'] 
-	def __init__(self, *args, **kwargs):
-		machine_set = kwargs.pop('machine_set', None)
-		super(ProfileUpdateForm, self).__init__(*args, **kwargs)
-		self.fields['machine'].queryset = machine_set
+		fields = ['machine']

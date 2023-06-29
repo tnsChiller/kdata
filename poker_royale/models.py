@@ -140,6 +140,7 @@ class Machine(models.Model):
 	kernel_initializer = models.CharField(choices=kernel_initializer_choices,
 								  default=RNDN,
 								  max_length=30)
+	ready = models.BooleanField(default=True)
 
 	def __str__(self):
 		return f"{self.name}_mk{self.mark}"
@@ -172,7 +173,6 @@ class Game(models.Model):
 	marked_for_close = models.BooleanField(default=False)
 	spar = models.BooleanField(default=False)
 	plot = models.ImageField(default='default.png', upload_to='lifter-out')
-	ready = models.BooleanField(default=True)
 
 	def __str__(self):
 		return self.name

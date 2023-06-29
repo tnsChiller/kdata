@@ -133,8 +133,8 @@ def home(request):
 
 		g_form = NewGameForm(instance=request.user)
 		s_form = NewSparSess(instance=request.user)
-#		s_form.fields["m1"].queryset = Machine.objects.filter(creator=request.user,ready=True)
-#		s_form.fields["m2"].queryset = Machine.objects.filter(creator=request.user,ready=True)
+		s_form.fields["m1"].queryset = Machine.objects.filter(creator=request.user,ready=True)
+		s_form.fields["m2"].queryset = Machine.objects.filter(creator=request.user,ready=True)
 
 	g_list = Game.objects.filter(spar=False, status="WAITING")
 	context = {
@@ -180,7 +180,7 @@ def train_machine(request):
 			m_obj = train.machine
 			m_obj.mark += 1
 			m_obj.pk = None
-#			m_obj.ready = False
+			m_obj.ready = False
 			m_obj.save()
 			train.new_pk = m_obj.unid
 			train.save()
