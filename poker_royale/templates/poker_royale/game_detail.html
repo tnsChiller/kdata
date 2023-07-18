@@ -13,10 +13,10 @@
       <p>Status: Waiting for a worthy foe.</p>
     {% elif object.status == "QUE" %}
       <p> Challenger: {{ object.m2.name }}_mk{{ object.m2.mark }}</p>
-      <p>Status: Queued for execution.</p>
+      <p>Status: QUE</p>
     {% elif object.status == "DONE" %}
       <p> Challenger: {{ object.m2.name }}_mk{{ object.m2.mark }}</p>
-      <p>Status: To the victor go the spoils.</p>
+      <p>Status: DONE</p>
       {% if object.final_dif >= 0 %}
         <p> Winner: {{ object.m1.name }}_mk{{ object.m1.mark }} </p>
       {% else %}

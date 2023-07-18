@@ -27,11 +27,8 @@ SECRET_KEY = "138f8b536994edb4764f3cfa482eb70bd9a27ad7a7d420b080e483256899479c"
 DEBUG = True
 
 ALLOWED_HOSTS = [
-        "54.91.183.117",
-        "3.239.238.8",
-    	"54.210.232.185",
-        "0.0.0.0",
-	    "3.84.95.34",
+	"0.0.0.0",
+        "18.207.242.73",
     	"k-data.co.uk"
         ]
 
@@ -43,14 +40,9 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = False
 SECURE_HSTS_PRELOAD = False
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-#CSRF_TRUSTED_ORIGINS = ['www.k-data.co.uk',
-#                        'k-data.co.uk',
-#                        'https:k-data.co.uk',
-#                        'https://www.k-data.co.uk',
-#                        'http:k-data.co.uk',
-#                        'http://www.k-data.co.uk',
-#    ]
-
+CSRF_TRUSTED_ORIGINS = ["https://k-data.co.uk",
+			"http://k-data.co.uk"
+	]
 # Application definition
 
 INSTALLED_APPS = [

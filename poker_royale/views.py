@@ -24,7 +24,6 @@ class GameDetailView(DetailView):
 			obj = self.model.objects.filter(pkid=pk).first()
 			payload = list(request.POST.keys())[1].split("_")
 			if payload[0] == "PLAY":
-				print("PLAY RECEIVED")
 				obj.m2 = Machine.objects.filter(unid=payload[1]).first()
 				obj.status = "QUE"
 				obj.save()
@@ -184,6 +183,7 @@ def train_machine(request):
 			m_obj.save()
 			train.new_pk = m_obj.unid
 			train.save()
+			messages.success(request, f"Training session created! You can see it in your training sessions.")
 			update_que()
 			return redirect("profile")
 	else:
